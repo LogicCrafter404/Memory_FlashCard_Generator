@@ -1,0 +1,118 @@
+/* =========================================
+   BUBBLE ICON
+   ========================================= */
+#fc-bubble {
+    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+    border-radius: 50%; background: white; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 2147483646; display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* NEW: Added for drag cursor support */
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+#fc-bubble:active { 
+    /* NEW: Hand changes to a grabbing fist when held down */
+    cursor: grabbing; 
+}
+#fc-bubble:hover { transform: scale(1.1); }
+#fc-bubble img { width: 40px; height: 40px; border-radius: 8px; }
+
+/* =========================================
+   GLOBAL & ANIMATED BACKGROUND (Your Exact Original Theme)
+   ========================================= */
+#fc-container {
+    position: fixed; bottom: 30px; right: 30px; width: 340px;
+    padding: 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1f2937; background: linear-gradient(-45deg, #e0e7ff, #f3e8ff, #fae8ff, #dbeafe);
+    background-size: 400% 400%; animation: fc-gradientBG 15s ease infinite;
+    min-height: 250px; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    z-index: 2147483647; display: none; box-sizing: border-box;
+}
+
+@keyframes fc-gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+/* =========================================
+   HEADER
+   ========================================= */
+#fc-container .header-container { 
+    display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; 
+    background: rgba(255, 255, 255, 0.4); padding: 10px; border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); backdrop-filter: blur(5px); position: relative;
+}
+#fc-container .logo { width: 32px; height: 32px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+#fc-container h2 { 
+    font-size: 22px; margin: 0; font-weight: 800;
+    background: linear-gradient(to right, #4f46e5, #9333ea);
+    background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2;
+}
+#fc-container .header-actions { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; gap: 5px; }
+#fc-container #closeBtn {
+    width: 26px; height: 26px; background: rgba(255, 255, 255, 0.5); color: #6b7280;
+    border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; cursor: pointer; transition: all 0.2s ease;
+}
+#fc-container #closeBtn:hover { background: #ef4444; color: white; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4); }
+
+/* =========================================
+   VIEW 1: GENERATOR
+   ========================================= */
+#fc-container #generator-view { 
+    display: flex; flex-direction: column; gap: 16px; background: rgba(255, 255, 255, 0.7);
+    padding: 20px; border-radius: 16px; box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.5); text-align: center;
+}
+#fc-container .hero-text { font-size: 14px; color: #4b5563; margin-bottom: 5px; line-height: 1.4; }
+#fc-container .hero-text span { font-weight: bold; color: #4f46e5; }
+#fc-container button#generateBtn {
+    width: 100%; padding: 14px; background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; 
+    transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); letter-spacing: 0.5px;
+}
+#fc-container button#generateBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6); background: linear-gradient(135deg, #4f46e5, #9333ea); }
+#fc-container button#generateBtn:disabled { background: #d1d5db; color: #6b7280; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Loading Animation */
+#fc-container .loader-container { display: none; justify-content: center; align-items: center; gap: 6px; height: 20px; }
+#fc-container #generateBtn:disabled ~ .loader-container { display: flex; }
+#fc-container .dot { width: 8px; height: 8px; background-color: #8b5cf6; border-radius: 50%; animation: fc-bounce 1.4s infinite ease-in-out both; }
+#fc-container .dot:nth-child(1) { animation-delay: -0.32s; }
+#fc-container .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes fc-bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+#fc-container #status { font-size: 14px; color: #374151; font-weight: 600; min-height: 20px; }
+
+/* =========================================
+   VIEW 2: FLASHCARD UI
+   ========================================= */
+#fc-container #flashcard-view { display: none; flex-direction: column; gap: 15px; }
+#fc-container .card-container { perspective: 1000px; width: 100%; height: 200px; }
+#fc-container .flashcard {
+    width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d; cursor: pointer;
+}
+#fc-container .flashcard.is-flipped { transform: rotateY(180deg); }
+#fc-container .card-face {
+    position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+    display: flex; align-items: center; justify-content: center; padding: 20px; 
+    box-sizing: border-box; border-radius: 12px; font-size: 16px; line-height: 1.5; 
+    text-align: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.8);
+}
+#fc-container .card-front { background-color: white; color: #111827; font-weight: 600; }
+#fc-container .card-back { background-image: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); color: #3730a3; transform: rotateY(180deg); font-weight: 500; }
+#fc-container .hint { font-size: 12px; color: #6b7280; text-align: center; margin-top: -5px; font-weight: 500; }
+#fc-container .controls { display: flex; justify-content: space-between; align-items: center; }
+#fc-container .controls button { 
+    width: auto; padding: 8px 16px; font-size: 13px; font-weight: 600; background: rgba(255, 255, 255, 0.6); 
+    color: #4b5563; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 8px; cursor: pointer; 
+    transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+#fc-container .controls button:hover:not(:disabled) { background: white; color: #4f46e5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+#fc-container .controls button:disabled { background: rgba(255,255,255,0.3); color: #9ca3af; cursor: not-allowed; box-shadow: none; }
+#fc-container #card-counter { font-size: 14px; font-weight: bold; color: #4b5563; }
+#fc-container .secondary-btn {
+    width: 100%; padding: 10px; font-size: 14px; font-weight: bold; background: rgba(255, 255, 255, 0.6); 
+    color: #4b5563; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 8px; cursor: pointer; 
+    transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-top: 5px;
+}
+#fc-container .secondary-btn:hover { background: white; color: #4f46e5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }

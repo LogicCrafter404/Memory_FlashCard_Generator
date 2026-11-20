@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "AI Flashcards",
+  "version": "1.0",
+  "description": "Generate flashcards from any webpage.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}

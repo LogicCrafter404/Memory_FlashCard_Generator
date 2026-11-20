@@ -1,0 +1,1 @@
+~ In Google Chrome, a manifest refers to manifest.json, the mandatory configuration and metadata file required for every Chrome Extension. It acts as the blueprint that tells the browser important details about the extension, such as its name, version, required permissions, and background scripts.
